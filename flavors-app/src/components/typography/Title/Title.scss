@@ -1,0 +1,10 @@
+@import "@sass/abstracts/abstracts";
+
+.title{
+  color: $color-dark-less;
+  text-shadow: 1px 1px 4px $color-dark-light;
+  font-weight: 400;
+  &.big{
+    font-size: 2.5rem;
+  }
+}

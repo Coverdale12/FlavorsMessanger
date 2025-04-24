@@ -1,0 +1,29 @@
+@import "@sass/abstracts/abstracts";
+
+@import "Avatar/Avatar";
+@import "Navigation/Navigation";
+
+.aside{
+  position: relative;
+  z-index: 10;
+  @include flexible(column, $al-items: center);
+  background-color: $color-dark-less;
+  width: fit-content;
+  border-radius: 1.5625rem;
+  padding-top: 1.8rem;
+  height: 100%;
+  @media screen and (width < 1200px){
+    margin-right: 0;
+  }
+  @media screen and (width < 650px){
+    @include flexible(row);
+    margin-top: auto;
+    order: 1;
+    width: 100%;
+    border-radius: 0;
+    height: 6.25rem;
+    & .avatar{
+      display: none;
+    }
+  }
+}

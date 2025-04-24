@@ -1,0 +1,42 @@
+@import "../../../sass/abstracts/abstracts";
+
+.confirm-modal{
+  &__title{
+    @include flexible(row-reverse, center, center);
+    color: $color-dark-less;
+    column-gap: 1.4rem;
+    font-size: 1.5rem;
+    font-weight: 500;
+    &::after{
+      @include flexible();
+      content: url('../../../assets/icons/global/flavors-logo.svg');
+      width: 4rem;
+      height: 4rem;
+    }
+  }
+  &__message{
+    @include flexible(row, center);
+    padding-block: 2rem;
+    font-size: 1.3rem;
+    color: $color-dark-less;
+    text-align: center
+  }
+  &__panel{
+    @include flexible(row, center);
+    column-gap: 0.5rem;
+  }
+  &__button{
+    cursor: pointer;
+    transition-duration: $transition-duration-button;
+    @include flexible(row, center);
+    background-color: $color-dark-less;
+    color: $color-light;
+    border: none;
+    border-radius: 0.8rem;
+    font-size: 1.6rem;
+    max-width: 8rem;
+    width: 100%;
+    padding: 0.5rem 1rem;
+    @include hoverEffect(background-color, $color-green);
+  }
+}

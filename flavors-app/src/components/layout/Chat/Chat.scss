@@ -1,0 +1,29 @@
+@import "@sass/abstracts/abstracts";
+
+@keyframes spawn-chat-animation {
+  0%{
+    opacity: 0.6;
+  }
+  100%{
+    opacity: 1;
+  }
+}
+
+.chat{
+  @include flexible(column, space-between);
+  width: 100%;
+  margin: 0.5rem 1rem;
+  max-width: 60rem;
+  padding: 1.875rem 1.25rem 1.25rem 2.5rem;
+  // Анимация появления
+  animation: spawn-chat-animation 0.8s forwards;
+  @media screen and (width < 1350px){
+    padding: 1.2rem 1rem 1.25rem 1rem;
+  }
+  @media screen and (width < 650px){
+    height: 100%;
+    margin: 0;
+    padding-block: 0;
+    margin-bottom: 10px;
+  }
+}

@@ -1,0 +1,112 @@
+@import "@sass/abstracts/abstracts";
+
+@keyframes spawn-message {
+  0%{
+    opacity: 0;
+    transform: translateY(0.2rem);
+  }
+  100%{
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.message.you{
+  position: relative;
+  @include flexible(center, end);
+  padding: 0.5rem;
+  &:last-of-type{
+    animation: spawn-message 0.3s ease-in-out forwards;
+  }
+  &::after {
+    content: url("../../../../assets/icons/chat/chat/after-element-message.svg");
+    background-color: $color-dark-less;
+    width: 1rem;
+    height: 1rem;
+    clip-path: polygon(0 0, 100% 0%, 40% 50%, 0% 100%);
+    border: 2px solid $color-dark-less;
+  }
+  &::before{
+    display: none;
+  }
+  .message__object {
+    position: relative;
+    @include flexible(column, $al-items: end);
+    padding: 0.4rem 0.7rem;
+    border-radius: 0.6rem 0 0.6rem 0.6rem;
+    max-width: 70%;
+    width: fit-content;
+    color: $color-light;
+    background-color: $color-dark-less;
+  }
+
+  &__content {
+    @include flexible();
+    font-size: 1.2rem;
+    width: 100%;
+  }
+
+  &__details {
+    width: fit-content;
+    height: fit-content;
+    float: right;
+  }
+}
+
+.message{
+  position: relative;
+  @include flexible(center, start);
+  padding: 0.5rem;
+  &:last-of-type{
+    animation: spawn-message 0.3s ease-in-out forwards;
+  }
+  &::before {
+    content: "";
+    background-color: $color-grey-light-very;
+    width: 1rem;
+    height: 1rem;
+    clip-path: polygon(0 0, 100% 0%, 100% 100%, 50% 50%);
+    border: 2px solid $color-grey-light-very;
+    color: $color-grey-light-very;
+    @media screen and (width < 650px){
+      width: 0.2rem;
+    }
+  }
+
+  &__object {
+    position: relative;
+    @include flexible(column, $al-items: end);
+    padding: 0.4rem 0.7rem;
+    border-radius: 0 0.6rem 0.6rem 0.6rem;
+    max-width: 70%;
+    width: fit-content;
+    color: $color-dark-less;
+    background-color: $color-grey-light-very;
+  }
+
+  &__content {
+    @include flexible();
+    font-size: 1.2rem;
+    width: 100%;
+  }
+
+  &__details {
+    width: fit-content;
+    height: fit-content;
+    float: right;
+  }
+}
+
+.message-date {
+  display: flex;
+  justify-content: center;
+  font-size: 1.2rem;
+  animation: spawn-message 0.3s ease-in-out forwards;
+  &__object {
+    background-color: $color-grey;
+    color: $color-light;
+    width: fit-content;
+    padding-inline: 1rem;
+    border-radius: 3rem;
+  }
+}

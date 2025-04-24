@@ -1,0 +1,85 @@
+//old utils
+.margin{
+  $poses: top, left, right, bottom, inline, block;
+  @each $pos in $poses {
+    @for $value from 1 through 10{
+      &__#{$pos}--#{$value}{
+        margin-#{$pos}: ($value * 10) + px;
+      }
+    }
+  }
+}
+.padding{
+  $poses: top, left, right, bottom, inline, block;
+  @each $pos in $poses {
+    @for $value from 1 through 10{
+      &__#{$pos}--#{$value}{
+        padding-#{$pos}: ($value * 10) + px;
+      }
+    }
+  }
+}
+.position-absolute{
+  position: absolute;
+  $poses: top, left, right, bottom;
+  @each $pos in $poses {
+    @for $value from 0 through 10{
+      &__#{$pos}--#{$value}{
+        #{$pos}: ($value * 10) + px;
+      }
+    }
+  }
+}
+//new utils rem/em
+.margin{
+  $poses: top, left, right, bottom, inline, block;
+  @each $pos in $poses {
+    @for $value from 1 through 10{
+      &__#{$pos}--#{$value}{
+        margin-#{$pos}: ($value * 10/16) + rem;
+      }
+    }
+  }
+}
+.padding{
+  $poses: top, left, right, bottom, inline, block;
+  @each $pos in $poses {
+    @for $value from 1 through 10{
+      &__#{$pos}--#{$value}{
+        padding-#{$pos}: ($value * 10/16) + rem;
+      }
+    }
+  }
+  @for $value from 1 through 10{
+    &--#{$value}{
+      padding: ($value * 10/16) + rem;
+    }
+  }
+}
+//vissualy-hidden
+.visually-hidden {
+  position: absolute !important;
+  width: 1px !important;
+  height: 1px !important;
+  margin: -1px !important;
+  border: 0 !important;
+  padding: 0 !important;
+  white-space: nowrap !important;
+  clip-path: inset(100%) !important;
+  clip: rect(0 0 0 0) !important;
+  overflow: hidden !important;
+}
+//box-shadow
+.box-shadow{
+  &__base{
+    box-shadow: 0px 4px 8px 2px lighten($color-dark-less, 38%);
+    @media screen and (width < 650px){
+      box-shadow: none;
+    }
+  }
+}
+.border-radius-layout{
+  &__base{
+    border-radius: 1.5625rem;
+  }
+}

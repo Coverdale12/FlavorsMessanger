@@ -1,0 +1,57 @@
+@import "@sass/abstracts/abstracts";
+.card{
+  cursor: pointer;
+  @include flexible(row, space-between, center);
+  border-bottom: 1px solid lighten($color-grey-light, 10%);
+  padding-top: 1.25rem;
+  padding-bottom: 1rem;
+  padding-inline: 0.6rem;
+  width: 100%;
+  &:hover{
+    background-color: lighten($color-grey-light, 25%);
+  }
+  &__header{
+    @include flexible($just-cont: space-between);
+    width: 100%;
+  }
+  &__title{
+    font-weight: 700;
+    font-size: 1.25rem;
+  }
+  &__time{
+    font-weight: 200;
+  }
+  &__body{
+    @include flexible(column);
+    width: 100%;
+    margin-left: 1.875rem;
+    font-size: 1rem;
+  }
+}
+.card__last-message{
+  @include flexible(row, space-between);
+  width: 100%;
+  &[data-js-message]::after{
+    @include flexible(row, center, center);
+    content: attr(data-js-message);
+    font-size: 1.2em;
+    width: auto;
+    padding: 0.5rem;
+    height: 1.3em;
+    background-color: $color-green;
+    color: $color-light;
+    border-radius: 1rem;
+  }
+  &[data-js-message=""]::after{
+    content: url("../../../../assets/icons/contacts/write-message-icon.svg");
+    background-color: transparent;
+  }
+  &[data-js-message="sending"]::after{
+    content: url("../../../../assets/icons/contacts/sending-message-icon.svg");
+    background-color: transparent;
+  }
+  &[data-js-message="checked"]::after{
+    content: url("../../../../assets/icons/contacts/cheked-message-icon.svg");
+    background-color: transparent;
+  }
+}

@@ -1,0 +1,26 @@
+@import "@sass/abstracts/abstracts";
+
+.contacts{
+  position: relative;
+  @include flexible(column);
+  color: $color-dark-less;
+  margin: 0.5rem 1rem;
+  max-width: 34.375rem;
+  width: 100%;
+  @media screen and (width < 1500px) {
+    max-width: 29.375rem;
+  }
+  @media screen and (width < 1200px){
+    width: 100%;
+    max-width: 200rem;
+  }
+  @media screen and (width < 650px){
+    margin: 0;
+    display: flex;
+    overflow: auto;
+    height: 100%;
+  }
+}
+
+
+

@@ -1,0 +1,88 @@
+import { useContext } from 'react'
+
+import Aside from '@components/layout/Aside/Aside'
+import Contacts from '@components/layout/Contacts/Contacts'
+import Chat from '@components/layout/Chat/Chat'
+import Login from '@components/pages/Login/Login'
+import Account from '@components/pages/Account/Account'
+
+
+import { BrowserRouter, Routes, Route, Outlet, Navigate } from 'react-router-dom'; // Импортируем компоненты Router
+
+import { AuthContext } from '@context/AuthContext'
+import { AuthProvider } from '@context/AuthContext'
+import { MessageProvider } from '@context/MessageContext';
+import { ChatProvider } from '@context/ChatContext'
+
+
+import "./sass/app.scss"
+
+
+
+// Главный компонент App не использует контекст напрямую
+export default function App() {
+  return (
+    <AuthProvider> {/* Провайдер оборачивает всё приложение */}
+      <MessageProvider>
+        <BrowserRouter> {/* Оборачиваем приложение в BrowserRouter */}
+          <Routes> {/* Определяем маршруты */}
+            <Route path="/login" element={<Login />} /> {/* Страница входа */}
+            <Route path="/" element={<ProtectedRoute />}> {/* Защищённый маршрут */}
+              <Route path="account" element={<Account />} /> {/* Главная страница */}
+              <Route index element={<MessagesPage />} />
+              <Route path="messages" element={<MessagesPage />} /> {/* Страница сообщений */}
+              <Route path="notifications" element={<NotificationsPage />} /> {/* Страница уведомлений */}
+              <Route path="options" element={<OptionsPage />} /> {/* Страница настроек */}
+            </Route>
+            <Route path="*" element={<Navigate to="/" />} /> {/* Перенаправление на главную страницу для несуществующих маршрутов */}
+          </Routes>
+        </BrowserRouter>
+      </MessageProvider>
+    </AuthProvider>
+  );
+}
+
+// Вложенный компонент, который использует контекст при проверки на аутентификацию
+function ProtectedRoute({ constComponent, path }) {
+  const { isAuthenticated } = useContext(AuthContext); // Получаем состояние аутентификации
+
+  return isAuthenticated ? (
+    <ChatProvider> {/* Если пользователь авторизован, показываем основное приложение */}
+      <Layout />
+    </ChatProvider>
+  ) : (
+    <Login />
+  );
+}
+
+// Общий макет с Aside
+function Layout() {
+  return (
+    <>
+      <Aside /> {/* Aside всегда отображается */}
+      <>
+        <Outlet /> {/* Вложенные маршруты отображаются здесь */}
+      </>
+    </>
+  );
+}
+
+// Страница сообщений
+function MessagesPage() {
+  return (
+    <>
+      <Contacts />
+      <Chat />
+    </>
+  );
+}
+
+// Страница уведомлений
+function NotificationsPage() {
+  return <div>Уведомления</div>;
+}
+
+// Страница настроек
+function OptionsPage() {
+  return <div>Настройки</div>;
+}

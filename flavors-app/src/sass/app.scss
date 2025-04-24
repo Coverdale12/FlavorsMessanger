@@ -1,0 +1,51 @@
+//core
+@import 'core/reset';
+@import 'core/typography';
+//abstracts
+@import 'abstracts/variables';
+@import 'abstracts/functions';
+@import 'abstracts/mixins';
+@import 'abstracts/utils';
+
+// components
+
+
+body{
+  @include flexible(row);
+  overflow: hidden;
+  font-family: $font-family-base;
+  height: 100%;
+}
+.container{
+  padding-inline: 10px;
+  font-weight: 500;
+}
+.content{
+  @include flexible(column, start, center);
+  background-image: none;
+  flex: 1 0 auto;
+}
+#root{
+  position: relative;
+  @include flexible();
+  justify-content: start;
+  height: 100%;
+  width: 100%;
+  padding: 15px;
+  @media screen and (width < 1200px) {
+    &:has(main[id]) .contacts{
+      display: none;
+    }
+    .chat:empty{
+      display: none
+    }
+  }
+  @media screen and (width < 650px){
+    @include flexible(column);
+    padding-bottom: 0;
+    padding: 0;
+    &:has(main[id]) .aside{
+      display: none;
+    }
+  }
+}

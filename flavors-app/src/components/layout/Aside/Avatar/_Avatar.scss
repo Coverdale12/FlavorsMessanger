@@ -1,0 +1,7 @@
+
+.avatar{
+  @include flexible();
+  font-family: $font-family-base;
+  border-radius: 50%;
+  border: 2px solid $color-dark-light;
+}

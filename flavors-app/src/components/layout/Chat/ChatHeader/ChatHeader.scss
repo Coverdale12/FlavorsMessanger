@@ -1,0 +1,87 @@
+@import "@sass/abstracts/abstracts";
+
+@keyframes spawn-chat-animation {
+  0% {
+    opacity: 0.6;
+  }
+
+  100% {
+    opacity: 1;
+  }
+}
+
+.chat__header {
+  @include flexible();
+  position: relative;
+  align-items: center;
+  padding-block: 1.25rem;
+  border-bottom: $color-grey-light 1px solid;
+  animation: spawn-chat-animation 0.5s ease-in forwards;
+
+  &--data {
+    margin-left: 1.5625rem;
+    width: 100%;
+    @media screen and (width < 900px){
+      margin-left: 0.7rem;
+    }
+  }
+
+  &--title {
+    font-size: 2rem;
+    white-space: nowrap;
+    overflow: hidden;
+    max-width: 22rem;
+  }
+
+  &--subtitle {
+    font-size: 1.25;
+    color: $color-dark-light;
+  }
+
+  &--back {
+    cursor: pointer;
+    display: none;
+    justify-content: center;
+    align-items: center;
+    border: none;
+    width: 50px;
+    aspect-ratio: 1;
+    background-color: transparent;
+    transition-duration: $transition-duration-button;
+
+    @media screen and (width < 1200px) {
+      display: flex;
+    }
+
+    @include hoverEffect(color, $color-green);
+  }
+
+  // &--item{
+  //   // @media screen and (width){
+
+  //   // }
+  // }
+  &--menu {
+    position: absolute;
+    right: 0;
+    @include flexible(row, center, center);
+    background-color: $color-light;
+    padding: 0.5rem
+  }
+  &--item:nth-child(2){
+    display: none;
+  }
+  &--list {
+    @include flexible(row, center, center);
+    column-gap: 2rem;
+  }
+
+  &--button {
+    cursor: pointer;
+    border: 0;
+    background-color: transparent;
+    color: $color-dark-less;
+    transition-duration: $transition-duration-button;
+    @include hoverEffect(color, $color-green);
+  }
+}

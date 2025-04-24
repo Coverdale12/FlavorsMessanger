@@ -1,0 +1,49 @@
+@import "@sass/abstracts/abstracts";
+
+@keyframes loading-animation {
+  0% {
+    opacity: 1;
+  }
+
+  50% {
+    opacity: 0.6;
+    color: $color-green;
+  }
+
+  100% {
+    opacity: 1;
+  }
+}
+
+@keyframes spawn-error {
+  0%{
+    opacity: 0;
+  }
+  100%{
+    opacity: 1;
+    color: $color-red;
+  }
+}
+
+
+.chatlist {
+  @include flexible();
+  margin-top: 2rem;
+  padding: 1.5rem;
+  overflow-y: auto;
+
+  &__loading {
+    text-align: center;
+    font-size: 1.5rem;
+    animation: loading-animation 1s ease infinite;
+  }
+  &__error{
+    text-align: center;
+    font-size: 1.2rem;
+    animation: spawn-error 1s ease-in-out forwards;
+  }
+  @media screen and (width < 650px) {
+    height: auto;
+    padding-bottom: 0;
+  }
+}
