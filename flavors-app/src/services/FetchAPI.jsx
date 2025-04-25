@@ -1,19 +1,12 @@
-import { apiUrl } from "../global/Variables";
+import { apiUrl } from "@global/Variables";
+import axios from "axios";
+
 
 export async function getTokens(username, password) {
   try {
-    const response = await fetch(`${apiUrl}/api/token/`, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({ username, password }),
-    });
-
-    if (!response.ok) {
-      throw new Error(`Ошибка авторизации ${response.status}`);
-    }
-    const data = await response.json();
+    const response = await axios.post(`${apiUrl}/api/token/`, { username, password });
+    
+    const data = await response.data;
     return data
 
   } catch (error) {
@@ -50,10 +43,10 @@ export async function getDataUser() {
     throw error;
   }
 }
-export async function getAllChats(id) {
+export async function getAllMessageChat(sender_id, receiver_id) {
   const accessToken = localStorage.getItem("access_token")
   try {
-    const response = await fetch(`${apiUrl}/chat/user/${id}/chats/`,{
+    const response = await fetch(`${apiUrl}/chat/chat-messages/${sender_id}/${receiver_id}/`, {
       method: "GET",
       headers: {
         'Content-Type': 'application/json',
@@ -71,26 +64,20 @@ export async function getAllChats(id) {
     console.error('Ошибка при получении:', error);
     throw error;
   }
-} 
-export async function getAllMessageChat(sender_id, receiver_id) {
+}
+
+export async function getDataFromAPI(url) {
   const accessToken = localStorage.getItem("access_token")
   try {
-    const response = await fetch(`${apiUrl}/chat/chat-messages/${sender_id}/${receiver_id}/`,{
-      method: "GET",
+    const response = await axios.get(url, {
       headers: {
-        'Content-Type': 'application/json',
         Authorization: `Bearer ${accessToken}`, // Добавляем токен в заголовок
       },
     });
-
-    if (!response.ok) {
-      throw new Error(`Ошибка получания данных с сервера! ${response.status}`);
-    }
-    const data = await response.json();
+    const data = await response.data;
     return data
 
   } catch (error) {
-    console.error('Ошибка при получении:', error);
     throw error;
   }
 }

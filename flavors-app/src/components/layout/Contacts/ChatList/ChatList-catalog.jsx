@@ -1,4 +1,3 @@
-import { useContext, useState } from "react";
 import ChatCard from "../Card/Card";
 import "./ChatList-catalog.scss"
 import { useChatContext } from "@context/ChatContext";

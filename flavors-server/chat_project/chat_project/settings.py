@@ -33,7 +33,7 @@ SECRET_KEY = 'django-insecure-6yv507-szp+l&ayg#vor*vm66@9cu5@qs#e4=t^*kge=g+8^)-
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ["*"]
 
 
 # Application definition
@@ -161,22 +161,17 @@ SESSION_COOKIE_SAMESITE = "Lax"
 CSRF_COOKIE_HTTPONLY = True
 SESSION_COOKIE_HTTPONLY = True
 
-# Домены которым мы доверяем
-CSRF_TRUSTED_ORIGINS = [
-    "http://localhost:5173", #Frontend Dev,
-    "http://localhost:5500",
-    "http://localhost:4173",
-    "https://flavors.cloudpub.ru:443",   # Frontend Production
-    # Frontent Production
-  
-]
-# Разрешение межсайтовых запросов на которых находится бэкенд
-CORS_ALLOWED_ORIGINS = [
-    "http://localhost:5173",  # Frontend Dev
-    "http://localhost:5500",
-    "http://localhost:4173",
-    "https://flavors.cloudpub.ru:443",   # Frontend Production
-]
+CORS_ALLOW_ALL_ORIGINS = True 
+
+# # Домены которым мы доверяем
+# CSRF_TRUSTED_ORIGINS = [
+#    'http://*',
+# ]
+# # Разрешение межсайтовых запросов на которых находится бэкенд
+# CORS_ALLOWED_ORIGINS = [
+#    r"^https?://.*$",
+# ]
+
 #Продакшн
 # CSRF_COOKIE_SECURE = True
 # SESSION_COOKIE_SECURE = True

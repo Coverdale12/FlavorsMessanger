@@ -1,7 +1,8 @@
 export function parseTimestampToTime(timestamp) {
   if (!timestamp) return null;
-
   try {
+    if (timestamp.length == 5) return timestamp
+
     const date = new Date(timestamp);
 
     // Извлекаем часы и минуты
@@ -14,10 +15,12 @@ export function parseTimestampToTime(timestamp) {
     return null;
   }
 }
+
 export function parseTimestampToDate(timestamp) {
   if (!timestamp) return null; // Проверяем, что timestamp не пустой
-
+  // if (typestamp.length < 6) return timestamp
   try {
+    if (timestamp.length == 5) return timestamp
     // Создаем объект Date из строки ISO 8601
     const date = new Date(timestamp);
 
@@ -34,7 +37,7 @@ export function parseTimestampToDate(timestamp) {
 }
 export function getTodayDateFormatted() {
   const today = new Date(); // Создаем объект с текущей датой <button class="citation-flag" data-index="5">
-  
+
   // Извлекаем компоненты даты
   const year = today.getFullYear(); // Получаем год
   const month = String(today.getMonth() + 1).padStart(2, '0'); // Получаем месяц (нумерация начинается с 0, поэтому добавляем 1) и дополняем ноль слева если нужно
@@ -54,8 +57,8 @@ export function formatDateToDayMonth(dateString) {
     // Получаем день и месяц
     const day = date.getDate(); // День месяца (1-31)
     const monthNames = [
-      "января", "февраля", "марта", "апреля", 
-      "мая", "июня", "июля", "августа", 
+      "января", "февраля", "марта", "апреля",
+      "мая", "июня", "июля", "августа",
       "сентября", "октября", "ноября", "декабря"
     ]; // Массив с названиями месяцев
     const monthName = monthNames[date.getMonth()]; // Получаем название месяца

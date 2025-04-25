@@ -1,12 +1,11 @@
 import "./ChatEntry.scss"
-import Message from "../ChatContainer/Message"
 import { useState, useEffect } from 'react';
 import { useMessages } from '@context/MessageContext';
 import { wsUrl } from "@global/Variables";
 
 export default function ChatEntry({ userId }) {
-
   const youUserId = JSON.parse(localStorage.getItem("user_data")).id
+  
   const selectors = {
     form: `[data-js-form-entry]`,
     buttonSend: `[data-js-send]`,

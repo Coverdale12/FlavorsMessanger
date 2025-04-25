@@ -1,10 +1,10 @@
 import { useContext, useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import { AuthContext } from "@context/AuthContext";
+import { useAuth } from "@context/AuthContext";
 import ConfirmModal from "../../../modal/ConfirmModal/ConfirmModal";
 
 export default function Navigation() {
-  const { logout } = useContext(AuthContext);
+  const { logout } = useAuth();
   const username = JSON.parse(localStorage.getItem("user_data")).username
   const [isModalOpen, setIsModalOpen] = useState(false); // Состояние модального окна
   const [action, setAction] = useState(null); // Действие, которое нужно подтвердить

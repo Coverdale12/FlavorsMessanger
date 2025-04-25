@@ -9,13 +9,13 @@ import Account from '@components/pages/Account/Account'
 
 import { BrowserRouter, Routes, Route, Outlet, Navigate } from 'react-router-dom'; // Импортируем компоненты Router
 
-import { AuthContext } from '@context/AuthContext'
 import { AuthProvider } from '@context/AuthContext'
 import { MessageProvider } from '@context/MessageContext';
 import { ChatProvider } from '@context/ChatContext'
 
 
 import "./sass/app.scss"
+import { useAuth } from './context/AuthContext'
 
 
 
@@ -44,7 +44,7 @@ export default function App() {
 
 // Вложенный компонент, который использует контекст при проверки на аутентификацию
 function ProtectedRoute({ constComponent, path }) {
-  const { isAuthenticated } = useContext(AuthContext); // Получаем состояние аутентификации
+  const { isAuthenticated } = useAuth(); // Получаем состояние аутентификации
 
   return isAuthenticated ? (
     <ChatProvider> {/* Если пользователь авторизован, показываем основное приложение */}

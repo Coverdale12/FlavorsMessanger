@@ -1,17 +1,16 @@
 import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
 import { useContext } from 'react';
 import { AuthContext } from '@context/AuthContext';
 import Title from '../../typography/Title/Title';
 import "./Login.scss";
-import { Link } from 'react-router-dom';
+import { useAuth } from '@context/AuthContext';
 
 export default function Login() {
-  const { isAuthenticated } = useContext(AuthContext);
+  const { login, isAuthenticated } = useAuth()
 
   const [username, setUsername] = useState('');
-  const [password, setPassword] = useState('');
-  const { login } = useContext(AuthContext); // Используем функцию login из контекста
+  const [password, setPassword] = useState('');// Используем функцию login из контекста
   const navigate = useNavigate(); // Импортируем useNavigate для перенаправления
 
   const handleSubmit = async (event) => {

@@ -14,5 +14,5 @@ export const DateProvider = ({ children }) => {
       {children}
     </DateContext.Provider>
   );
-}
+};
 

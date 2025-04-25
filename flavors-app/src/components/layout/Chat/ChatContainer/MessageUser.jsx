@@ -11,10 +11,9 @@ export default function MessageUser({ message }) {
     date: parseTimestampToDate(message.timestamp),
     status: ""
   }
-  const jsonString = JSON.stringify(jsonData)
 
   return (
-    <div className="message" data-json-js={jsonString}>
+    <div className="message" data-json-js={JSON.stringify(jsonData)}>
       <article className="message__object">
         <div className="message__content">
           {jsonData.text}

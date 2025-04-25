@@ -1,21 +1,17 @@
 import "./Message.scss"
 import { useState } from "react"
-import {parseTimestampToTime, parseTimestampToDate} from "@global/Time"
+import { parseTimestampToTime, parseTimestampToDate } from "@global/Time"
 
 
 export default function Message({ message }) {
   const [stateMessage, setStateMessage] = useState("")
+  
   const messageData = {
     text: message.text,
     time: parseTimestampToTime(message.timestamp),
     date: parseTimestampToDate(message.timestamp),
     status: ""
   }
-  if(message.type === "you"){
-    messageData.time = message.timestamp
-  }
-  
-  const jsonString = JSON.stringify(messageData)
 
   return (
     <div className="message you" data-json-js={messageData}>
@@ -27,7 +23,6 @@ export default function Message({ message }) {
           <time dateTime={messageData.date} className="message__time">
             {messageData.time}
           </time>
-
         </div>
       </article>
     </div>

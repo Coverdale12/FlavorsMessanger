@@ -5,7 +5,6 @@ import "./Card.scss"
 import { useChatContext } from "@context/ChatContext";
 
 export default function ChatCard({ title, time, lastMessage, lastMessageStatus, jsonStringDataUser }) {
-  const [attribute, setAttribute] = useState(lastMessage)
   const { openChat } = useChatContext();
   const dataAttrs = ["sending", "checked"]
 
@@ -16,7 +15,7 @@ export default function ChatCard({ title, time, lastMessage, lastMessageStatus, 
   }
 
   return (
-    <article className="card" onClick={(event) => { handlerClickOnCard(event) }} data-js-userdata={jsonStringDataUser}>
+    <article className="card" onClick={handlerClickOnCard} data-js-userdata={jsonStringDataUser}>
       <Avatar
         src="/src/assets/icons/aside/user-icon-avatar.png"
         alt="avatar"

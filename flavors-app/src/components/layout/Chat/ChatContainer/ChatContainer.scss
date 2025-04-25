@@ -1,39 +1,41 @@
 @import "@sass/abstracts/abstracts";
 
 @keyframes spawn-chat-animation {
-  0%{
+  0% {
     opacity: 0.6;
   }
-  100%{
+
+  100% {
     opacity: 1;
   }
 }
 
-.chat-container{
+.chat-container {
   @include flexible(column-reverse);
   height: 100%;
   overflow-y: scroll;
-
-  
   // Скрытие скроллбара в чате
   scrollbar-width: none;
   -ms-overflow-style: none;
-  &::-webkit-scrollbar{
+
+  &::-webkit-scrollbar {
     display: none;
   }
 
   animation: spawn-chat-animation 0.5s ease-in forwards;
 
 
-  &__wrapper{
+  &__wrapper {
     height: 100%;
     @include flexible(column, end);
     padding: 1rem;
   }
-  &__placeholder{
+
+  &__placeholder {
     display: none;
   }
-  &__placeholder:only-child{
+
+  &__placeholder:only-child {
     display: flex;
     height: 100%;
     width: 100%;

@@ -1,14 +1,25 @@
 import "./ChatContainer.scss"
 import Message from "./Message"
-import MessageDate from "./MessageDate"
 import MessageUser from "./MessageUser"
 import { useMessages } from "@context/MessageContext"
-import { useDate } from "@context/DateContext"
-
+import useLocalStorage from "@hooks/useLocalStorage"
 
 export default function ChatContainer() {
   const { messages } = useMessages();
-  // const { nowDate } = useDate();
+  const [userData, _] = useLocalStorage("user_data")
+
+  const MessagesList = () => {
+    return (
+      <>
+        {messages.map((msg, index) =>
+          msg.type === "you" || msg.sender.id === JSON.parse(localStorage.getItem("user_data"))?.id
+            ? <Message message={msg} key={index} />
+            : <MessageUser message={msg} key={index} />
+        )}
+      </>
+    )
+  }
+
 
   return (
     <div className="chat-container">
@@ -16,21 +27,7 @@ export default function ChatContainer() {
         {messages.length === 0 ? (
           <div className="chat-container__placeholder">Здесь пока ничего нет...</div>
         ) : (
-          <>
-            {messages.map((msg, index) => {
-              
-              if (msg.type === "you" || msg.sender.id === JSON.parse(localStorage.getItem("user_data")).id) {
-                return (
-                  <Message message={msg} key={index}/>
-                )
-              } else {
-                return (
-                  <MessageUser message={msg} key={index}/>
-                )
-              }
-            }
-            )}
-          </>
+          <MessagesList />
         )}
       </div>
     </div>

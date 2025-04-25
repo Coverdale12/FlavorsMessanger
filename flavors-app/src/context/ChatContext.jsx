@@ -7,7 +7,7 @@ const ChatContext = createContext();
 export function ChatProvider({ children }) {
   const [stateChat, setStateChat] = useState(false);
 
-  const openChat = (dataJsonUser) => setStateChat(dataJsonUser);
+  const openChat = (dataJsonUser) => setStateChat(JSON.parse(dataJsonUser));
   const closeChat = () => setStateChat(false);
 
   return (

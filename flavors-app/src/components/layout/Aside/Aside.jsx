@@ -1,8 +1,7 @@
 import Avatar from "./Avatar/Avatar"
 import Navigation from "./Navigation/Navigation"
 import "./Aside.scss"
-import { useContext, useEffect, useState } from "react"
-import { AuthContext } from "@context/AuthContext"
+import { useEffect, useState } from "react"
 import { getDataUser } from "@services/FetchAPI"
 
 export default function Aside(){
