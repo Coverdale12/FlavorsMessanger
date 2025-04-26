@@ -9,21 +9,37 @@ export const AuthProvider = ({ children }) => {
   const [isAuthenticated, setIsAuthenticated] = useState(localStorage.getItem('refresh_token')); // Состояние авторизации
 
   // Вход пользователя
-  async function login(username, password){
+  async function login(username, password) {
     return getTokens(username, password).then((data) => {
-      localStorage.setItem('access_token', data.access); // Сохраняем Access Token
-      localStorage.setItem('refresh_token', data.refresh); // Сохраняем Refresh Token
-      setIsAuthenticated(true); // Устанавливаем состояние авторизации
-      getDataUser().then((data) => {
-        localStorage.setItem("user_data", JSON.stringify(data))
-        location.reload()
-      })
+      setUser({
+        access: data.access,
+        refresh: data.refresh,
+        username: username
+      });
+
+      localStorage.setItem('access_token', data.access);
+      localStorage.setItem('refresh_token', data.refresh);
+      setIsAuthenticated(true);
+
+      getDataUser().then((userData) => {
+        setUser(prevUser => ({
+          ...prevUser, // Сохраняем существующие данные (access, refresh, username)
+          ...userData  // Добавляем новые данные из getDataUser()
+        }));
+
+        localStorage.setItem("user_data", JSON.stringify({
+          access: data.access,
+          refresh: data.refresh,
+          username: username,
+          ...userData
+        }));
+      });
     }).catch((error) => {
       throw new Error(error)
     })
   };
   // Выход пользователя
-  function logout(){
+  function logout() {
     localStorage.removeItem('access_token');
     localStorage.removeItem('refresh_token');
     localStorage.removeItem("user_data");

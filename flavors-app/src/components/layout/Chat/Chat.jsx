@@ -25,7 +25,9 @@ export default function Chat() {
      
     getDataFromAPI(`${apiUrl}/chat/chat-messages/${stateChat.id}/${userData.id}/`)
       .then((data) => {setMessages(data)})
-      .catch((err) => console.log(err))
+      .catch((err) => {
+        console.log(err)      
+      })
 
   }, [stateChat])
 

@@ -4,8 +4,7 @@ import { useAuth } from "@context/AuthContext";
 import ConfirmModal from "../../../modal/ConfirmModal/ConfirmModal";
 
 export default function Navigation() {
-  const { logout } = useAuth();
-  const username = JSON.parse(localStorage.getItem("user_data")).username
+  const { user, logout } = useAuth();
   const [isModalOpen, setIsModalOpen] = useState(false); // Состояние модального окна
   const [action, setAction] = useState(null); // Действие, которое нужно подтвердить
 
@@ -113,7 +112,7 @@ export default function Navigation() {
       {/* Модальное окно */}
       <ConfirmModal
         isOpen={isModalOpen}
-        message={`Выйти из аккаунта ${username}?`}
+        message={`Выйти из аккаунта ${user.username}?`}
         onConfirm={handleConfirm}
         onCancel={handleCancel}
       />

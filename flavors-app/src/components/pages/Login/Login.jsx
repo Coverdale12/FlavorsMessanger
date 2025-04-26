@@ -1,13 +1,11 @@
 import React, { useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
-import { useContext } from 'react';
-import { AuthContext } from '@context/AuthContext';
 import Title from '../../typography/Title/Title';
 import "./Login.scss";
 import { useAuth } from '@context/AuthContext';
 
 export default function Login() {
-  const { login, isAuthenticated } = useAuth()
+  const { user, login, isAuthenticated } = useAuth()
 
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');// Используем функцию login из контекста
@@ -44,7 +42,7 @@ export default function Login() {
           required
         />
         {isAuthenticated && <p className="login__paragrapth">
-          You are logged in as <Link to="/account"><span>{JSON.parse(localStorage.getItem("user_data")).username}</span></Link>
+          You are logged in as <Link to="/account"><span>{user.username}</span></Link>
         </p>}
         <button type="submit" className="login__button">Login</button>
         <p className="login__paragrapth">

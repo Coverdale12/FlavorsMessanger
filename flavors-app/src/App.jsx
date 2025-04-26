@@ -7,7 +7,7 @@ import Login from '@components/pages/Login/Login'
 import Account from '@components/pages/Account/Account'
 
 
-import { BrowserRouter, Routes, Route, Outlet, Navigate } from 'react-router-dom'; // Импортируем компоненты Router
+import { BrowserRouter, Routes, Route, Outlet, Navigate, useNavigate } from 'react-router-dom'; // Импортируем компоненты Router
 
 import { AuthProvider } from '@context/AuthContext'
 import { MessageProvider } from '@context/MessageContext';
@@ -43,16 +43,14 @@ export default function App() {
 }
 
 // Вложенный компонент, который использует контекст при проверки на аутентификацию
-function ProtectedRoute({ constComponent, path }) {
+function ProtectedRoute() {
   const { isAuthenticated } = useAuth(); // Получаем состояние аутентификации
 
   return isAuthenticated ? (
     <ChatProvider> {/* Если пользователь авторизован, показываем основное приложение */}
       <Layout />
     </ChatProvider>
-  ) : (
-    <Login />
-  );
+  ) : <Navigate to="/login" />;
 }
 
 // Общий макет с Aside
