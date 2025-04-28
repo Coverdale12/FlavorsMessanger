@@ -3,8 +3,7 @@ import axios from 'axios';
 import useLocalStorage from './useLocalStorage';
 
 
-export const useFetch = (url) => {
-  const [token, _] = useLocalStorage("access_token")
+export default function useFetch(url, token = false) {
   const [state, setState] = useState({ loading: true })
   const headers = token ? {
     headers: {

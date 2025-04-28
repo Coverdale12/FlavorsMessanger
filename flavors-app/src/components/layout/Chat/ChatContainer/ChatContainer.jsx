@@ -1,18 +1,19 @@
+import { useAuth } from "@context/AuthContext"
 import "./ChatContainer.scss"
 import Message from "./Message"
 import MessageUser from "./MessageUser"
 import { useMessages } from "@context/MessageContext"
-import useLocalStorage from "@hooks/useLocalStorage"
+
 
 export default function ChatContainer() {
   const { messages } = useMessages();
-  const [userData, _] = useLocalStorage("user_data")
+  const { user } = useAuth();
 
   const MessagesList = () => {
     return (
       <>
         {messages.map((msg, index) =>
-          msg.type === "you" || msg.sender.id === JSON.parse(localStorage.getItem("user_data"))?.id
+          msg.type === "you" || msg.sender.id === user.id
             ? <Message message={msg} key={index} />
             : <MessageUser message={msg} key={index} />
         )}

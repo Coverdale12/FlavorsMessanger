@@ -2,9 +2,11 @@ import "./ChatEntry.scss"
 import { useState, useEffect } from 'react';
 import { useMessages } from '@context/MessageContext';
 import { wsUrl } from "@global/Variables";
+import { useAuth } from "@context/AuthContext";
 
 export default function ChatEntry({ userId }) {
-  const youUserId = JSON.parse(localStorage.getItem("user_data")).id
+  const { user } = useAuth()
+  const youUserId = user.id
   
   const selectors = {
     form: `[data-js-form-entry]`,

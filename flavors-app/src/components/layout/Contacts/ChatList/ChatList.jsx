@@ -1,7 +1,7 @@
 import ChatListCatalog from "./ChatList-catalog"
 import "./ChatList.scss"
 import { apiUrl } from "@global/Variables"
-import { useFetch } from "@hooks/useFetch"
+import useFetch from "@hooks/useFetch"
 import useLocalStorage from "@hooks/useLocalStorage"
 import { Navigate } from "react-router-dom"
 import { useAuth } from "@context/AuthContext"
@@ -9,9 +9,8 @@ import { useAuth } from "@context/AuthContext"
 
 export default function ChatList({ chats }) {
   const {user} = useAuth();
-  const [userData, _] = useLocalStorage("user_data")
-  const {data, error, loading} = useFetch(`${apiUrl}/chat/user/${user.id}/chats/`)
-  
+  const {data, error, loading} = useFetch(`${apiUrl}/chat/user/${user.id}/chats/`, user.access)
+
   if(error){
     return(
       error.status === 401 && <Navigate to="/login" replace />

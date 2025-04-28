@@ -3,14 +3,16 @@ import ChatEntry from "./ChatEntry/ChatEntry";
 import ChatContainer from "./ChatContainer/ChatContainer"
 
 import "./Chat.scss";
-import { useEffect, useState } from "react";
+import { useEffect} from "react";
 import { useChatContext } from "@context/ChatContext";
 import { useMessages } from "@context/MessageContext";
 import { apiUrl } from "@global/Variables";
 
-import { getDataFromAPI } from "../../../services/FetchAPI";
+import { getDataFromAPI } from "@services/FetchAPI";
+import { useAuth } from "@context/AuthContext";
 
 export default function Chat() {
+  const { user } = useAuth();
   const { stateChat } = useChatContext();
   const { setMessages } = useMessages();
   
@@ -20,14 +22,11 @@ export default function Chat() {
     if (!stateChat) {
       return
     }
-
-    const userData = JSON.parse(localStorage.getItem("user_data")) 
-     
-    getDataFromAPI(`${apiUrl}/chat/chat-messages/${stateChat.id}/${userData.id}/`)
+    getDataFromAPI(`${apiUrl}/chat/chat-messages/${stateChat.id}/${user.id}/`, user.access)
       .then((data) => {setMessages(data)})
       .catch((err) => {
         console.log(err)      
-      })
+      });
 
   }, [stateChat])
 

@@ -1,17 +1,11 @@
 import Avatar from "./Avatar/Avatar"
 import Navigation from "./Navigation/Navigation"
 import "./Aside.scss"
-import { useEffect, useState } from "react"
-import { getDataUser } from "@services/FetchAPI"
+import { useAuth } from "@context/AuthContext"
 
 export default function Aside(){
-  const [user, setUser] = useState("")
-  useEffect(() => {
-    getDataUser().then((data) => {
-      setUser(data)
-    })
-  }, [])
-
+  const { user } = useAuth();
+  
   return(
     <aside className="aside">
       <Avatar 

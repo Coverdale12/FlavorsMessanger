@@ -1,48 +1,40 @@
 import { createContext, useContext, useState } from 'react';
 import { apiUrl } from '@global/Variables';
-import { getTokens, getDataUser } from '@services/FetchAPI';
+import axios from 'axios';
 
 export const AuthContext = createContext();
 
 export const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null); // Текущий пользователь
-  const [isAuthenticated, setIsAuthenticated] = useState(localStorage.getItem('refresh_token')); // Состояние авторизации
-
+  const [isAuthenticated, setIsAuthenticated] = useState(false); // Состояние авторизации
+  
   // Вход пользователя
-  async function login(username, password) {
-    return getTokens(username, password).then((data) => {
-      setUser({
+  const login = async (username, password) => {
+    try {
+      const { data } = await axios.post(`${apiUrl}/api/token/`, { username, password });
+      const { data: userData } = await axios.get(`${apiUrl}/chat/user/me/`, {
+        headers: {
+          "Authorization": `Bearer ${data.access}`
+        }
+      });
+
+      const user = {
         access: data.access,
         refresh: data.refresh,
-        username: username
-      });
-
-      localStorage.setItem('access_token', data.access);
-      localStorage.setItem('refresh_token', data.refresh);
+        username,
+        ...userData
+      };
+      // Запись пользователя в контекст
+      setUser(user);
       setIsAuthenticated(true);
 
-      getDataUser().then((userData) => {
-        setUser(prevUser => ({
-          ...prevUser, // Сохраняем существующие данные (access, refresh, username)
-          ...userData  // Добавляем новые данные из getDataUser()
-        }));
-
-        localStorage.setItem("user_data", JSON.stringify({
-          access: data.access,
-          refresh: data.refresh,
-          username: username,
-          ...userData
-        }));
-      });
-    }).catch((error) => {
-      throw new Error(error)
-    })
+      return Promise.resolve(user);
+    } catch (error) {
+      return Promise.reject(error);
+    }
   };
   // Выход пользователя
-  function logout() {
-    localStorage.removeItem('access_token');
-    localStorage.removeItem('refresh_token');
-    localStorage.removeItem("user_data");
+  const logout = () => {
     setUser(null);
     setIsAuthenticated(false);
   };

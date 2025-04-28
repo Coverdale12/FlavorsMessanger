@@ -9,6 +9,8 @@ export default function Login() {
 
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');// Используем функцию login из контекста
+  const [error, setError] = useState(false);
+
   const navigate = useNavigate(); // Импортируем useNavigate для перенаправления
 
   const handleSubmit = async (event) => {
@@ -16,7 +18,7 @@ export default function Login() {
     login(username, password).then(() => {
       navigate("/")
     }).catch((err) => {
-      alert("Неправильный логин или пароль")
+      err.status === 401 && alert("Неправильные логин или пароль!")
     })
   };
 

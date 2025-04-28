@@ -3,18 +3,6 @@ import axios from "axios";
 import { useNavigate } from "react-router-dom";
 
 
-export async function getTokens(username, password) {
-  try {
-    const response = await axios.post(`${apiUrl}/api/token/`, { username, password });
-    
-    const data = await response.data;
-    return data
-
-  } catch (error) {
-    console.error('Ошибка при входе:', error);
-    throw error;
-  }
-}
 export async function getDataUser() {
   const accessToken = localStorage.getItem("access_token")
   if (!accessToken) {
@@ -67,12 +55,11 @@ export async function getAllMessageChat(sender_id, receiver_id) {
   }
 }
 
-export async function getDataFromAPI(url) {
-  const accessToken = localStorage.getItem("access_token")
+export async function getDataFromAPI(url, token = false) {
   try {
-    const response = await axios.get(url, {
+    const response = await axios.get(url, token && {
       headers: {
-        Authorization: `Bearer ${accessToken}`, // Добавляем токен в заголовок
+        Authorization: `Bearer ${token}`, // Добавляем токен в заголовок
       },
     });
     const data = await response.data;
