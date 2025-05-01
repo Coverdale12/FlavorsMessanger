@@ -1,4 +1,4 @@
-import { useContext } from 'react'
+import { useContext, useEffect } from 'react'
 
 import Aside from '@components/layout/Aside/Aside'
 import Contacts from '@components/layout/Contacts/Contacts'
@@ -12,10 +12,11 @@ import { BrowserRouter, Routes, Route, Outlet, Navigate, useNavigate } from 'rea
 import { AuthProvider } from '@context/AuthContext'
 import { MessageProvider } from '@context/MessageContext';
 import { ChatProvider } from '@context/ChatContext'
-
+import { WebSocketProvider } from '@context/WebSocketContext'
 
 import "./sass/app.scss"
 import { useAuth } from './context/AuthContext'
+import { useWebSocket } from './context/WebSocketContext'
 
 
 
@@ -47,14 +48,24 @@ function ProtectedRoute() {
   const { isAuthenticated } = useAuth(); // Получаем состояние аутентификации
 
   return isAuthenticated ? (
-    <ChatProvider> {/* Если пользователь авторизован, показываем основное приложение */}
-      <Layout />
-    </ChatProvider>
+    <WebSocketProvider>
+      <ChatProvider> {/* Если пользователь авторизован, показываем основное приложение */}
+        <Layout />
+      </ChatProvider>
+    </WebSocketProvider>
   ) : <Navigate to="/login" />;
 }
 
 // Общий макет с Aside
 function Layout() {
+  const { user } = useAuth();
+  const { connectToWebSocket, WebSocketAPI } = useWebSocket();
+
+  // Соединение с веб сокет сервером
+  useEffect(() => {
+    const webSocketServer = connectToWebSocket(user.id, user.access)
+  }, [])
+
   return (
     <>
       <Aside /> {/* Aside всегда отображается */}
