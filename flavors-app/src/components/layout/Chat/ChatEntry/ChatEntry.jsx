@@ -3,11 +3,13 @@ import { useState, useEffect } from 'react';
 import { useMessages } from '@context/MessageContext';
 import { wsUrl } from "@global/Variables";
 import { useAuth } from "@context/AuthContext";
+import { useWebSocket } from "@context/WebSocketContext";
 
 export default function ChatEntry({ userId }) {
+  const { WebSocketAPI } = useWebSocket();
   const { user } = useAuth()
   const youUserId = user.id
-  
+
   const selectors = {
     form: `[data-js-form-entry]`,
     buttonSend: `[data-js-send]`,
@@ -16,9 +18,8 @@ export default function ChatEntry({ userId }) {
   const [inputValue, setInputValue] = useState("");
   // Используем контекст для управления сообщениями
   const { addMessage } = useMessages();
-  // Состояние для WebSocket-сокета
-  const [socket, setSocket] = useState(null);
 
+  
   // Функция для обработки ввода текста
   const inputHandler = (event) => {
     const form = event.target.closest(selectors.form);
@@ -35,13 +36,13 @@ export default function ChatEntry({ userId }) {
     if (!inputValue.trim()) return;
 
     // Отправляем сообщение через WebSocket
-    if (socket && socket.readyState === WebSocket.OPEN) {
+    if (WebSocketAPI && WebSocketAPI.readyState === WebSocket.OPEN) {
       const messageData = {
         sender_id: youUserId,
         receiver_id: userId, //  на реальный ID получателя
         text: inputValue,
       };
-      socket.send(JSON.stringify(messageData));
+      WebSocketAPI.send(JSON.stringify(messageData));
     }
     // Добавляем сообщение в локальное состояние чата
     const formattedTime = new Date().toLocaleTimeString("ru-RU", {
@@ -64,16 +65,10 @@ export default function ChatEntry({ userId }) {
 
   // Установка соединения с WebSocket при монтировании компонента
   useEffect(() => {
-    // Создаем WebSocket-соединение
-    const chatSocket = new WebSocket(`${wsUrl}/ws/chat/${user.id}/?token=${user.access}`);
-    // Обработчик успешного подключения
-    chatSocket.onopen = () => {
-      console.log("Connected to WebSocket server");
-    };
     // Обработчик получения сообщений
-    chatSocket.onmessage = (event) => {
+    WebSocketAPI.onmessage = (event) => {
       const data = JSON.parse(event.data);
-      console.log(data)
+      
       // Добавляем полученное сообщение в локальное состояние чата
       addMessage({
         type: "other",
@@ -86,22 +81,15 @@ export default function ChatEntry({ userId }) {
     };
 
     // Обработчик ошибок
-    chatSocket.onerror = (error) => {
+    WebSocketAPI.onerror = (error) => {
       console.error("WebSocket error:", error);
     };
 
     // Обработчик закрытия соединения
-    chatSocket.onclose = () => {
+    WebSocketAPI.onclose = () => {
       console.log("WebSocket connection closed");
     };
 
-    // Сохраняем сокет в состоянии
-    setSocket(chatSocket);
-
-    // Закрываем соединение при размонтировании компонента
-    return () => {
-      chatSocket.close();
-    };
   }, [userId]);
 
   // Обработка нажатия клавиши Enter
