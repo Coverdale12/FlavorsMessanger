@@ -55,6 +55,9 @@
   &__icon {
     transition-duration: $transition-duration-button;
     color: $color-light;
+    @media screen and (width < 650px) {
+      width: 2.5rem;
+    }
   }
 
   @media screen and (width < 650px) {

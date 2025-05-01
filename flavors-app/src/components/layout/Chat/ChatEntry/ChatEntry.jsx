@@ -16,7 +16,6 @@ export default function ChatEntry({ userId }) {
   const [inputValue, setInputValue] = useState("");
   // Используем контекст для управления сообщениями
   const { addMessage } = useMessages();
-
   // Состояние для WebSocket-сокета
   const [socket, setSocket] = useState(null);
 
@@ -66,7 +65,7 @@ export default function ChatEntry({ userId }) {
   // Установка соединения с WebSocket при монтировании компонента
   useEffect(() => {
     // Создаем WebSocket-соединение
-    const chatSocket = new WebSocket(`${wsUrl}/ws/chat/${youUserId}/`);
+    const chatSocket = new WebSocket(`${wsUrl}/ws/chat/${user.id}/?token=${user.access}`);
     // Обработчик успешного подключения
     chatSocket.onopen = () => {
       console.log("Connected to WebSocket server");
